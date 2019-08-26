@@ -1,0 +1,18 @@
+% Alberto Pizano
+% ECE448
+% Lab 1
+
+clc
+clear
+
+% PART2
+
+v = 0.8; % variance
+m = 1.0; % mean
+x = sqrt(v)*randn(1,50)+m*ones(1,50) % Gaussian distrubution
+
+xmax = max(x)
+
+for k = x
+    if
+end

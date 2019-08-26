@@ -5,6 +5,10 @@
 clc
 clear
 
+rand(3)
+rand(1,3)
+rand(1,4)
+
 % PART1
 v = 25;
 m = 10;
