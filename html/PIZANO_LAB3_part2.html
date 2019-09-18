@@ -1,0 +1,201 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>PIZANO_LAB3_part2</title><meta name="generator" content="MATLAB 9.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-09-16"><meta name="DC.source" content="PIZANO_LAB3_part2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Task 2, section 1</a></li><li><a href="#3">Task 2, section 2</a></li></ul></div><pre class="codeinput"><span class="comment">% Alberto Pizano</span>
+<span class="comment">% Lab 3</span>
+<span class="comment">% ECE448</span>
+
+clc;
+clear;
+</pre><h2 id="2">Task 2, section 1</h2><pre class="codeinput">delta_t = 1e-3;
+precede = zeros(1,500);
+trail = zeros(1,500);
+sig_x = ones(1,1000);
+x = [precede sig_x trail];
+w = -pi:2*pi/255:pi;
+y = conv(x,x);
+Xf = freqz(x,1,w).*delta_t;
+Mult = Xf.*Xf;
+
+figure
+subplot(2,1,1)
+plot(w/pi,abs(Mult));
+title(<span class="string">'Product of Magnitude Spectra'</span>)
+Convol = freqz(y,1,w).*delta_t;
+subplot(2,1,2)
+plot(w/pi,abs(Convol));
+title(<span class="string">'Magnitude Spectrum of Convolved Sequence'</span>)
+
+figure
+subplot(2,1,1)
+plot(w/pi,angle(Mult));grid
+title(<span class="string">'Sum of Phase Spectra'</span>)
+subplot(2,1,2)
+plot(w/pi,angle(Convol));grid
+title(<span class="string">'Phase Spectrum of Convolved Sequence'</span>)
+</pre><img vspace="5" hspace="5" src="PIZANO_LAB3_part2_01.png" alt=""> <img vspace="5" hspace="5" src="PIZANO_LAB3_part2_02.png" alt=""> <h2 id="3">Task 2, section 2</h2><pre class="codeinput">y = x.*x;
+Yf = freqz(y,1,w).*delta_t.*delta_t;
+ConvF = conv(Xf,Xf);
+ConvF = ConvF(128:128+256-1);
+
+figure(4);
+subplot(2,1,1);
+plot(w/pi,abs(ConvF));
+title(<span class="string">'Product of Magnitude Spectra'</span>);
+xlabel(<span class="string">'Frequency'</span>);
+ylabel(<span class="string">'Magnitude'</span>);
+Convol = freqz(y,1,w).*delta_t;
+subplot(2,1,2);
+plot(w/pi,abs(Convol));
+title(<span class="string">'Magniutude Spectrum of Convolved Sequence'</span>);
+xlabel(<span class="string">'Frequency'</span>);
+ylabel(<span class="string">'Magnitude'</span>);
+
+figure(5);
+subplot(2,1,1);
+plot(w/pi,angle(ConvF));grid
+title(<span class="string">'Sum of Phase Sectra'</span>);
+xlabel(<span class="string">'Frequency'</span>);
+ylabel(<span class="string">'Phase'</span>);
+
+Convol = freqz(y,1,w).*delta_t;
+subplot(2,1,2);
+plot(w/pi,angle(Convol));grid
+title(<span class="string">'Phase Spectrum of Convolved Sequence'</span>);
+xlabel(<span class="string">'Frequency'</span>);
+ylabel(<span class="string">'Phase'</span>);
+</pre><img vspace="5" hspace="5" src="PIZANO_LAB3_part2_03.png" alt=""> <img vspace="5" hspace="5" src="PIZANO_LAB3_part2_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Alberto Pizano
+% Lab 3
+% ECE448
+
+clc;
+clear;
+
+%% Task 2, section 1
+delta_t = 1e-3;                                 
+precede = zeros(1,500);
+trail = zeros(1,500);
+sig_x = ones(1,1000);
+x = [precede sig_x trail]; 
+w = -pi:2*pi/255:pi;         
+y = conv(x,x); 
+Xf = freqz(x,1,w).*delta_t; 
+Mult = Xf.*Xf;
+
+figure
+subplot(2,1,1) 
+plot(w/pi,abs(Mult)); 
+title('Product of Magnitude Spectra') 
+Convol = freqz(y,1,w).*delta_t; 
+subplot(2,1,2) 
+plot(w/pi,abs(Convol)); 
+title('Magnitude Spectrum of Convolved Sequence') 
+
+figure
+subplot(2,1,1) 
+plot(w/pi,angle(Mult));grid 
+title('Sum of Phase Spectra') 
+subplot(2,1,2) 
+plot(w/pi,angle(Convol));grid 
+title('Phase Spectrum of Convolved Sequence')
+%% Task 2, section 2
+y = x.*x;
+Yf = freqz(y,1,w).*delta_t.*delta_t;
+ConvF = conv(Xf,Xf);
+ConvF = ConvF(128:128+256-1);
+
+figure(4); 
+subplot(2,1,1);
+plot(w/pi,abs(ConvF));
+title('Product of Magnitude Spectra');
+xlabel('Frequency');
+ylabel('Magnitude');
+Convol = freqz(y,1,w).*delta_t;
+subplot(2,1,2);
+plot(w/pi,abs(Convol));
+title('Magniutude Spectrum of Convolved Sequence');
+xlabel('Frequency');
+ylabel('Magnitude');
+
+figure(5); 
+subplot(2,1,1);
+plot(w/pi,angle(ConvF));grid
+title('Sum of Phase Sectra');
+xlabel('Frequency');
+ylabel('Phase');
+
+Convol = freqz(y,1,w).*delta_t;
+subplot(2,1,2);
+plot(w/pi,angle(Convol));grid
+title('Phase Spectrum of Convolved Sequence');
+xlabel('Frequency');
+ylabel('Phase');
+##### SOURCE END #####
+--></body></html>
