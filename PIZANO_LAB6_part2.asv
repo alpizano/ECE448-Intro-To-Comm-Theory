@@ -1,0 +1,175 @@
+clc
+close all
+clear all
+%% Task 2, part 1, generation of FM waveform
+
+n    = -499:500;                  
+Ts   = 0.02;                    
+t    = n*Ts;                
+kf   = 0.2;
+Am   = 1.5;
+fm   = 1;
+m    = Am*cos(2*pi*fm*t);
+fc   = 10;
+Ac   = 2; 
+s    = Ac*cos(2*pi*fc*t+(kf*Am/fm)*sin(2*pi*fm*t));
+delf = 1/(Ts * 1000);
+f    = n*delf;
+sft  = abs(fft(s))/1000;
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('\beta = 0.3: Two Significant Sidebands')
+
+%% Task 2, part 2, beta = 1,2, and 5
+
+figure
+% ? = 1
+n    = -499:500;
+Ts   = 0.02;
+t    = n*Ts;
+kf   = 0.2;
+Am   = 5;
+fm   = 1;
+m    = Am*cos(2*pi*fm*t);
+fc   = 10;
+Ac   = 2;
+s    = Ac*cos(2*pi*fc*t+(kf*Am/fm)*sin(2*pi*fm*t));
+delf = 1/(Ts*1000);
+f    = n*delf;
+sft  = abs(fft(s))/1000;
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('A_{m} = 5: Six Significant Sidebands')
+
+%
+figure
+% ? = 2
+n    = -499:500;                          % Establishing 1000 points
+Ts   = 0.02;                              % Sample period
+t    = n * Ts;                            % Time scaling
+kf   = 0.2;                               % Frequency sensivity
+Am   = 10;                                % Message Amplitude
+fm   = 1;                                 % Message Frequency
+m    = Am * cos(2 * pi * fm * t);         % Message with unit frequency
+fc   = 10;                                % Carrier Frequency 10 Hz
+Ac   = 2;                                 % Carrier Amplitude
+s    = Ac*cos(2 * pi * fc * t + (kf*Am/fm)*sin(2*pi*fm*t)); % FM waveform
+delf = 1 / (Ts * 1000);                   % Separation of frequencies
+f    = n * delf;                          % Frequency scale
+sft  = abs(fft(s)) / 1000;                % Spectrum magnitude
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('A_{m} = 10: Eight Significant Sidebands')
+
+%
+figure
+% ? = 5
+n    = -499:500;                          % Establishing 1000 points
+Ts   = 0.02;                              % Sample period
+t    = n * Ts;                            % Time scaling
+kf   = 0.2;                               % Frequency sensivity
+Am   = 25;                                % Message Amplitude
+fm   = 1;
+m    = Am * cos(2 * pi * fm * t);
+fc   = 10;
+Ac   = 2;
+s    = Ac*cos(2 * pi * fc * t + (kf*Am/fm)*sin(2*pi*fm*t));
+delf = 1 / (Ts * 1000);
+f    = n * delf;
+sft  = abs(fft(s)) / 1000; 
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('A_{m} = 25: Sixteen Significant Sidebands')
+
+%% Task2, part 3, m = 0.5 Hz
+
+figure
+% ? = 1
+n    = -499:500;                          % Establishing 1000 points
+Ts   = 0.02;                              % Sample period
+t    = n * Ts;                            % Time scaling
+kf   = 0.2;                               % Frequency sensivity
+Am   = 2.5;                               % Message Amplitude
+fm   = 0.5;                               % Message Frequency
+m    = Am * cos(2 * pi * fm * t);         % Message with unit frequency
+fc   = 10;                                % Carrier Frequency 10 Hz
+Ac   = 2;                                 % Carrier Amplitude
+s    = Ac*cos(2 * pi * fc * t + (kf*Am/fm)*sin(2*pi*fm*t)); % FM waveform
+delf = 1 / (Ts * 1000);                   % Separation of frequencies
+f    = n * delf;                          % Frequency scale
+sft  = abs(fft(s)) / 1000;                % Spectrum magnitude
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('A_{m} = 2.5: Six Significant Sidebands')
+
+%
+figure
+% ? = 2
+n    = -499:500;                          % Establishing 1000 points
+Ts   = 0.02;                              % Sample period
+t    = n * Ts;                            % Time scaling
+kf   = 0.2;                               % Frequency sensivity
+Am   = 5;                                 % Message Amplitude
+fm   = 0.5;                               % Message Frequency
+m    = Am * cos(2 * pi * fm * t);         % Message with unit frequency
+fc   = 10;                                % Carrier Frequency 10 Hz
+Ac   = 2;                                 % Carrier Amplitude
+s    = Ac*cos(2 * pi * fc * t + (kf*Am/fm)*sin(2*pi*fm*t)); % FM waveform
+delf = 1 / (Ts * 1000);                   % Separation of frequencies
+f    = n * delf;                          % Frequency scale
+sft  = abs(fft(s)) / 1000;                % Spectrum magnitude
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('A_{m} = 5: Eight Significant Sidebands')
+
+%
+figure
+% ? = 5
+n    = -499:500;                          % Establishing 1000 points
+Ts   = 0.02;                              % Sample period
+t    = n * Ts;                            % Time scaling
+kf   = 0.2;                               % Frequency sensivity
+Am   = 12.5;                              % Message Amplitude
+fm   = 0.5;                               % Message Frequency
+m    = Am * cos(2 * pi * fm * t);         % Message with unit frequency
+fc   = 10;                                % Carrier Frequency 10 Hz
+Ac   = 2;                                 % Carrier Amplitude
+s    = Ac*cos(2 * pi * fc * t + (kf*Am/fm)*sin(2*pi*fm*t)); % FM waveform
+delf = 1 / (Ts * 1000);                   % Separation of frequencies
+f    = n * delf;                          % Frequency scale
+sft  = abs(fft(s)) / 1000;                % Spectrum magnitude
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('A_{m} = 12.5: Sixteen Significant Sidebands')
+
+% Modify script so that ? = 2.4048 only by changing the message amplitude. 
+% Show the new amplitude spectrum and designate the carrier amplitude.
+
+%
+figure
+% ? = 2.4048
+n    = -499:500;                          % Establishing 1000 points
+Ts   = 0.02;                              % Sample period
+t    = n * Ts;                            % Time scaling
+kf   = 0.2;                               % Frequency sensivity
+Am   = 12.024;                            % Message Amplitude
+fm   = 1;                                 % Message Frequency
+m    = Am * cos(2 * pi * fm * t);         % Message with unit frequency
+fc   = 10;                                % Carrier Frequency 10 Hz
+Ac   = 2;                                 % Carrier Amplitude
+s    = Ac*cos(2 * pi * fc * t + (kf*Am/fm)*sin(2*pi*fm*t)); % FM waveform
+delf = 1 / (Ts * 1000);                   % Separation of frequencies
+f    = n * delf;                          % Frequency scale
+sft  = abs(fft(s)) / 1000;                % Spectrum magnitude
+stem(f,fftshift(sft));
+xlabel('Frequency (Hz)')
+ylabel('Magnitude Spectrum of |S(f)|')
+title('A_{m} = 12.024: Carrier Amplitude Equals Zero')
+%}
